@@ -27,6 +27,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
     }
 
     @IBAction func searchRestaurants(_ sender: UIButton) {
+        print(self.latitude)
+        print(self.longitude)
         locationManager.startUpdatingLocation()
     }
     
@@ -57,7 +59,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
             let vc = segue.destination as? RestaurantTableViewController
             vc?.latitude = self.latitude
             vc?.longitude = self.longitude
-            self.present(vc!, animated: true, completion: nil)
+            //self.present(vc!, animated: true, completion: nil)
         }
     }
 }
