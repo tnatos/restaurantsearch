@@ -18,6 +18,7 @@ struct Restaurant: Decodable {
     let id: String?
     let name: String?
     let category: String?
+    let image_url: ImageUrls?
     let address: String?
     let tel: String?
     let tel_sub: String?
@@ -31,4 +32,9 @@ struct Access: Decodable {
     let line: String?
     let station: String?
     let walk: String?
+}
+
+struct ImageUrls: Decodable {
+    let shop_image1: String?
+    let shop_image2: String?
 }

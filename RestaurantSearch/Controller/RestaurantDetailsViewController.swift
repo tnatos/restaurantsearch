@@ -12,7 +12,7 @@ import UIKit
 
 class RestaurantDetailsViewController: UIViewController {
     //MARK: Properties
-    var restaurantImageUrl: String!
+    var restaurantImageUrl: ImageUrls!
     var restaurantName: String!
     var restaurantAddress: String!
     var telephone: String!
@@ -32,5 +32,22 @@ class RestaurantDetailsViewController: UIViewController {
         restaurantAddressLabel.text = self.restaurantAddress
         telephoneLabel.text = self.telephone
         businessHoursLabel.text = self.businessHours
+        loadImage()
+    }
+    
+    func loadImage() {
+    let urlString = self.restaurantImageUrl.shop_image1
+    if (urlString != "") {
+        let url = URL(string: urlString!)
+        URLSession.shared.dataTask(with: url!) { (data, response, err) in
+        guard let data = data else { return }
+        let image = UIImage(data: data)
+        DispatchQueue.main.async {
+            self.restaurantImage.image = image
+        }
+    }.resume()
+    }
+
+
     }
 }

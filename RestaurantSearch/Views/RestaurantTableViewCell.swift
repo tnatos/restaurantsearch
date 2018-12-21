@@ -11,6 +11,8 @@ import UIKit
 class RestaurantTableViewCell: UITableViewCell {
 
     //MARK: Properties
+    var imageUrl: String!
+    
     @IBOutlet weak var restaurantImage: UIImageView!
     @IBOutlet weak var restaurantNameLabel: UILabel!
     @IBOutlet weak var restaurantAccessLabel: UILabel!
@@ -18,8 +20,6 @@ class RestaurantTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        restaurantNameLabel.text = ""
-        restaurantAccessLabel.text = ""
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -27,5 +27,10 @@ class RestaurantTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+
+    override func layoutSubviews() {
+        self.contentView.layer.cornerRadius = 5 
+    }
+    
 
 }

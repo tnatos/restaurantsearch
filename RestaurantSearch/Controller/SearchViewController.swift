@@ -57,8 +57,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
         if segue.destination is RestaurantTableViewController
         {
             let vc = segue.destination as? RestaurantTableViewController
-            vc?.latitude = self.latitude
-            vc?.longitude = self.longitude
+            vc?.latitude = 34.69374 //self.latitude
+            vc?.longitude = 135.50218 //self.longitude
             //self.present(vc!, animated: true, completion: nil)
         }
     }

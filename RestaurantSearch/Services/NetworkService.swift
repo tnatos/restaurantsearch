@@ -31,4 +31,7 @@ class GuruNavi {
             }
             }.resume()
     }
+    
+    
 }
+
