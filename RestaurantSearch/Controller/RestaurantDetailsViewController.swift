@@ -38,14 +38,12 @@ class RestaurantDetailsViewController: UIViewController {
     func loadImage() {
     let urlString = self.restaurantImageUrl.shop_image1
     if (urlString != "") {
-        let url = URL(string: urlString!)
-        URLSession.shared.dataTask(with: url!) { (data, response, err) in
-        guard let data = data else { return }
-        let image = UIImage(data: data)
-        DispatchQueue.main.async {
-            self.restaurantImage.image = image
+        ImageService.loadImage(urlString: urlString!) {
+            (result: UIImage) in
+            DispatchQueue.main.async {
+                self.restaurantImage.image = result
+            }
         }
-    }.resume()
     }
 
 

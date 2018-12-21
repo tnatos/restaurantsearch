@@ -6,7 +6,7 @@
 //  Copyright © 2018 Darren Tang. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class GuruNavi {
     
@@ -31,7 +31,16 @@ class GuruNavi {
             }
             }.resume()
     }
-    
-    
 }
 
+class ImageService {
+    
+    static func loadImage(urlString: String, completion: @escaping (_ result: UIImage) -> Void) {
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!) { (data, response, err) in
+            guard let data = data else { return }
+            let image = UIImage(data: data)
+            completion(image!)
+            }.resume()
+    }
+}

@@ -84,7 +84,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="QBQ-Bq-Ncf" firstAttribute="trailing" secondItem="VbW-BF-Hhw" secondAttribute="trailing" constant="16" id="8Qj-Ab-4KW"/>
                             <constraint firstItem="VbW-BF-Hhw" firstAttribute="leading" secondItem="0cl-oL-zCi" secondAttribute="leadingMargin" id="GzN-Nc-yzt"/>
@@ -119,6 +119,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="separatorColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="sectionIndexBackgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="100" reuseIdentifier="RestaurantTableViewCell" rowHeight="100" id="CfC-vS-lJU" customClass="RestaurantTableViewCell" customModule="RestaurantSearch" customModuleProvider="target">
@@ -167,7 +168,7 @@
                                         <constraint firstItem="2xE-hf-Tkp" firstAttribute="leading" secondItem="Ixi-om-EP9" secondAttribute="leadingMargin" id="pHa-OO-KsS"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <outlet property="restaurantAccessLabel" destination="6OA-kX-Hm6" id="lft-7U-1Qv"/>
                                     <outlet property="restaurantImage" destination="PHR-Z4-OZ1" id="1mr-lG-9DY"/>

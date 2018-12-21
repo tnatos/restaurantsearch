@@ -13,6 +13,7 @@ class RestaurantTableViewController: UITableViewController {
     //MARK Properties:
     var latitude: Double = 1.0
     var longitude: Double = 1.0
+    let imageCache = NSCache<NSString, UIImage>()
 
     var restaurants = [Restaurant]()
     
@@ -53,23 +54,28 @@ class RestaurantTableViewController: UITableViewController {
 
         // Configure the cell...
         let restaurant = restaurants[indexPath.row]
-
         cell.restaurantNameLabel?.text = restaurant.name!
         cell.restaurantAccessLabel?.text = "\(restaurant.access?.line ?? "")\(restaurant.access?.station ?? "")から\(restaurant.access?.walk ?? "")分"
-        
+        // Loading cell image thumbnail
         let urlString = restaurant.image_url?.shop_image1
+        
         if (urlString != "") {
-        let url = URL(string: urlString!)
-            URLSession.shared.dataTask(with: url!) { (data, response, err) in
-                guard let data = data else { return }
-                print(data)
-                let image = UIImage(data: data)
-                DispatchQueue.main.async {
-                    cell.restaurantImage.image = image
+            // Load image from cache, otherwise load image from url
+            if let imageFromCache = imageCache.object(forKey: urlString! as NSString) {
+                cell.restaurantImage.image = imageFromCache
+            }
+            else {
+                ImageService.loadImage(urlString: urlString!) {
+                    (result: UIImage) in
+                    DispatchQueue.main.async {
+                        cell.restaurantImage.image = result
+                        self.imageCache.setObject(result, forKey: urlString! as NSString)
+                    }
                 }
-            }.resume()
+            }
         }
         else {
+            // reset reused cell thumbnail image to placeholder for restaurants without an image
             cell.restaurantImage.image = UIImage(named: "Restaurant Thumbnail Placeholder")
         }
         return cell
