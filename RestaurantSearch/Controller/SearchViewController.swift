@@ -17,6 +17,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
     var longitude: Double = 0
     var filterCreditCard: Bool = false
     var searchRadius: Int = 2
+    var searchTerms: String!
     
     @IBOutlet weak var searchTextField: UITextField!
     
@@ -27,12 +28,21 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        searchTextField.delegate = self
+        self.searchTerms = ""
     }
 
-    @IBAction func searchRestaurants(_ sender: UIButton) {
-        print(self.latitude)
-        print(self.longitude)
+    //MARK: Actions
+    @IBAction func searchRestaurants(_ sender: Any) {
         locationManager.startUpdatingLocation()
+    }
+    
+    @IBAction func searchTextFieldChanged(_ sender: UITextField) {
+        self.searchTerms = sender.text
+    }
+    
+    @IBAction func resignTextFieldInput(_ sender: UITapGestureRecognizer) {
+        searchTextField.resignFirstResponder()
     }
     
     //MARK: LocationManager Delegate Functions
@@ -57,14 +67,26 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
         self.filterCreditCard = creditCard
     }
     
+    //MARK: Search Textfield Delegate Functions
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.performSegue(withIdentifier: "searchRestaurantSegue", sender: self)
+        return true
+    }
+    
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        
+        searchTextField.resignFirstResponder()
         if segue.destination is RestaurantTableViewController {
             let vc = segue.destination as? RestaurantTableViewController
             vc?.latitude = self.latitude
             vc?.longitude = self.longitude
+            vc?.searchRadius = self.searchRadius + 1
+            vc?.creditCard = self.filterCreditCard
+            vc?.searchTerms = self.searchTerms
+            print(searchTerms)
         }
         else if segue.destination is SearchFilterModalViewController {
             let vc = segue.destination as? SearchFilterModalViewController

@@ -11,6 +11,7 @@ import Foundation
 struct Restaurants: Decodable {
     let total_hit_count: Int?
     let hit_per_page: Int?
+    let page_offset: Int?
     let rest: [Restaurant]?
     let error: [Error]?
 }

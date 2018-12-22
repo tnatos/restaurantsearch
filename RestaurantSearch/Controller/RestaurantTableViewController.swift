@@ -11,8 +11,13 @@ import UIKit
 class RestaurantTableViewController: UITableViewController {
     
     //MARK Properties:
-    var latitude: Double = 1.0
-    var longitude: Double = 1.0
+    var latitude: Double!
+    var longitude: Double!
+    var creditCard: Bool!
+    var searchRadius: Int!
+    var searchTerms: String!
+    var pagesLoaded: Int!
+    var maxPages: Int!
     let imageCache = NSCache<NSString, UIImage>()
 
     var restaurants = [Restaurant]()
@@ -24,15 +29,22 @@ class RestaurantTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        GuruNavi.loadData(latitude: self.latitude, longitude: self.longitude) {
+        self.pagesLoaded = 0
+        loadRestaurantData()
+    }
+
+    func loadRestaurantData() {
+        GuruNavi.loadData(latitude: self.latitude, longitude: self.longitude, searchRadius: self.searchRadius, creditCard: self.creditCard, searchTerms: self.searchTerms, page: (self.pagesLoaded + 1)) {
             (result: Restaurants) in
             if (result.error == nil) {
-                self.restaurants = result.rest!
+                self.restaurants.append(contentsOf: result.rest!)
+                self.pagesLoaded == 0 ? (self.pagesLoaded = 1) : (self.pagesLoaded = (self.pagesLoaded + 1))
+                self.maxPages = (result.total_hit_count! / result.hit_per_page!) + 1
                 DispatchQueue.main.async {
-                   self.tableView.reloadData()
+                    self.tableView.reloadData()
                 }
             }
-            else {
+            else if (self.pagesLoaded == 0){
                 DispatchQueue.main.async {
                     let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
                     noDataLabel.text          = result.error?[0].message
@@ -41,12 +53,10 @@ class RestaurantTableViewController: UITableViewController {
                     self.tableView.backgroundView  = noDataLabel
                     self.tableView.separatorStyle  = .none
                 }
-
-
             }
         }
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,6 +75,10 @@ class RestaurantTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of RestaurantTableViewCell.")
         }
         
+        //Load additional pages when reaching end of list
+        if (indexPath.row == self.restaurants.count - 1 && self.pagesLoaded < self.maxPages) {
+           loadRestaurantData()
+        }
 
         // Configure the cell...
         let restaurant = restaurants[indexPath.row]
@@ -94,12 +108,8 @@ class RestaurantTableViewController: UITableViewController {
         }
         return cell
     }
-    
-    func loadImage(urlString: String) {
-        print(urlString)
-        
-    }
 
+    //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.destination is RestaurantDetailsViewController

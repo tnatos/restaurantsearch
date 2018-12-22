@@ -23,17 +23,21 @@
                                 <state key="normal" title="検索"/>
                                 <connections>
                                     <action selector="searchRestaurants:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VJ6-qF-zY3"/>
-                                    <segue destination="D7W-jV-dew" kind="show" id="iYG-Y1-tgQ"/>
+                                    <segue destination="D7W-jV-dew" kind="show" identifier="searchRestaurantSegue" id="iYG-Y1-tgQ"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="キーワードー　[店名、焼肉など]" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YhA-4l-KF5">
                                 <rect key="frame" x="24" y="391" width="272" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="searchRestaurants:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="73c-dZ-NFM"/>
+                                    <action selector="searchTextFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="jhm-fC-2mp"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Yf-1n-iOV">
-                                <rect key="frame" x="30" y="429" width="50" height="27"/>
+                                <rect key="frame" x="30" y="423" width="50" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="詳細条件"/>
                                 <connections>
@@ -42,11 +46,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="9Ns-BE-yhd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="303" id="004-j1-Q6p"/>
                             <constraint firstItem="3Yf-1n-iOV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="55j-ud-GiU"/>
                             <constraint firstItem="9Ns-BE-yhd" firstAttribute="leading" secondItem="YhA-4l-KF5" secondAttribute="trailing" constant="24" id="5cP-UY-wae"/>
-                            <constraint firstItem="3Yf-1n-iOV" firstAttribute="top" secondItem="YhA-4l-KF5" secondAttribute="bottom" constant="8" symbolic="YES" id="5uV-jO-TrV"/>
+                            <constraint firstItem="3Yf-1n-iOV" firstAttribute="top" secondItem="YhA-4l-KF5" secondAttribute="bottom" constant="2" id="5uV-jO-TrV"/>
                             <constraint firstItem="YhA-4l-KF5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="BmO-a5-qZB"/>
                             <constraint firstItem="YhA-4l-KF5" firstAttribute="top" secondItem="9Ns-BE-yhd" secondAttribute="top" id="Ggt-QU-DJf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3Yf-1n-iOV" secondAttribute="trailing" symbolic="YES" id="aX0-bb-61L"/>
@@ -54,6 +59,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9Ns-BE-yhd" secondAttribute="trailing" constant="24" id="wng-Le-aq8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ubC-kt-zHP" appends="YES" id="QVe-mb-qQe"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="hc8-Em-kjB"/>
                     <connections>
@@ -70,6 +78,11 @@
                         <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="abd-u4-Ma4"/>
                     </connections>
                 </searchDisplayController>
+                <tapGestureRecognizer id="ubC-kt-zHP">
+                    <connections>
+                        <action selector="resignTextFieldInput:" destination="BYZ-38-t0r" id="cgI-Rm-RDm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1693.5999999999999" y="133.74384236453201"/>
         </scene>
@@ -156,10 +169,10 @@
         <scene sceneID="lpG-E6-vg5">
             <objects>
                 <tableViewController id="D7W-jV-dew" customClass="RestaurantTableViewController" customModule="RestaurantSearch" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="9v1-SC-XaR">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="9v1-SC-XaR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="separatorColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="sectionIndexBackgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <prototypes>
@@ -167,7 +180,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CfC-vS-lJU" id="Ixi-om-EP9" customClass="UITableViewCellContentView">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2xE-hf-Tkp">
@@ -203,6 +216,7 @@
                                             </constraints>
                                         </stackView>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.92156862750000001" green="0.89019607840000003" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstItem="2xE-hf-Tkp" firstAttribute="top" secondItem="Ixi-om-EP9" secondAttribute="topMargin" id="Mx8-T7-nfW"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="2xE-hf-Tkp" secondAttribute="trailing" id="p8i-oN-cZH"/>
@@ -284,8 +298,8 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="HVt-nb-sbW">
-                                        <rect key="frame" x="227" y="198" width="132" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HVt-nb-sbW">
+                                        <rect key="frame" x="212" y="198" width="139" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ULX-oD-AnL">
                                                 <rect key="frame" x="0.0" y="0.0" width="77" height="30"/>
@@ -295,8 +309,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eja-Rt-Y4N">
-                                                <rect key="frame" x="101" y="0.0" width="31" height="30"/>
-                                                <state key="normal" title="適用"/>
+                                                <rect key="frame" x="93" y="0.0" width="46" height="30"/>
+                                                <state key="normal" title="　適用"/>
                                                 <connections>
                                                     <action selector="applyFilterSettings:" destination="DuK-13-r1C" eventType="touchUpInside" id="Rmx-2A-5gw"/>
                                                 </connections>
@@ -314,7 +328,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gEd-vW-9A8" secondAttribute="trailing" constant="20" symbolic="YES" id="0uQ-Nl-JGA"/>
                                     <constraint firstItem="gEd-vW-9A8" firstAttribute="leading" secondItem="NUb-w8-YXK" secondAttribute="leading" constant="16" id="CzG-rj-aEK"/>
-                                    <constraint firstAttribute="trailing" secondItem="HVt-nb-sbW" secondAttribute="trailing" constant="16" id="Fi0-qP-etW"/>
+                                    <constraint firstAttribute="trailing" secondItem="HVt-nb-sbW" secondAttribute="trailing" constant="24" id="Fi0-qP-etW"/>
                                     <constraint firstItem="tWw-9y-Fon" firstAttribute="top" secondItem="gEd-vW-9A8" secondAttribute="bottom" constant="30" id="Tjd-d1-xgs"/>
                                     <constraint firstAttribute="trailing" secondItem="tWw-9y-Fon" secondAttribute="trailing" constant="16" id="V99-eG-dwh"/>
                                     <constraint firstItem="tWw-9y-Fon" firstAttribute="leading" secondItem="NUb-w8-YXK" secondAttribute="leading" constant="16" id="W1l-TS-cHZ"/>
