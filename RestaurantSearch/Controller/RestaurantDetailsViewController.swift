@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-import UIKit
+import MapKit
 
 class RestaurantDetailsViewController: UIViewController {
     //MARK: Properties
@@ -18,12 +17,12 @@ class RestaurantDetailsViewController: UIViewController {
     var telephone: String!
     var businessHours: String!
     
-    
     @IBOutlet weak var restaurantImage: UIImageView!
     @IBOutlet weak var restaurantNameLabel: UILabel!
     @IBOutlet weak var restaurantAddressLabel: UILabel!
     @IBOutlet weak var telephoneLabel: UILabel!
     @IBOutlet weak var businessHoursLabel: UILabel!
+    @IBOutlet weak var restaurantMapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +32,21 @@ class RestaurantDetailsViewController: UIViewController {
         telephoneLabel.text = self.telephone
         businessHoursLabel.text = self.businessHours
         loadImage()
+        let location = restaurantAddress
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(location!) { [weak self] placemarks, error in
+            if let placemark = placemarks?.first, let location = placemark.location {
+                let mark = MKPlacemark(placemark: placemark)
+                
+                if var region = self?.restaurantMapView.region {
+                    region.center = location.coordinate
+                    region.span.longitudeDelta /= 5000.0
+                    region.span.latitudeDelta /= 5000.0
+                    self?.restaurantMapView.setRegion(region, animated: true)
+                    self?.restaurantMapView.addAnnotation(mark)
+                }
+            }
+        }
     }
     
     func loadImage() {

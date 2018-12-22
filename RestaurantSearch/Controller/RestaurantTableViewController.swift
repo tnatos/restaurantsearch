@@ -26,9 +26,23 @@ class RestaurantTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         GuruNavi.loadData(latitude: self.latitude, longitude: self.longitude) {
             (result: Restaurants) in
-            self.restaurants = result.rest!
-            DispatchQueue.main.async {
-               self.tableView.reloadData()
+            if (result.error == nil) {
+                self.restaurants = result.rest!
+                DispatchQueue.main.async {
+                   self.tableView.reloadData()
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
+                    noDataLabel.text          = result.error?[0].message
+                    noDataLabel.textColor     = UIColor.black
+                    noDataLabel.textAlignment = .center
+                    self.tableView.backgroundView  = noDataLabel
+                    self.tableView.separatorStyle  = .none
+                }
+
+
             }
         }
     }

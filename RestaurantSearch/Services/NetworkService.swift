@@ -25,6 +25,7 @@ class GuruNavi {
             guard let data = data else { return }
             do {
                 let restaurants = try JSONDecoder().decode(Restaurants.self, from: data)
+                print(restaurants)
                 completion(restaurants)
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)

@@ -18,6 +18,7 @@
 		BC3910D421C9DF500081C454 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3910D321C9DF500081C454 /* NetworkService.swift */; };
 		BC3910D721CA0EE10081C454 /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3910D621CA0EE10081C454 /* RestaurantTableViewCell.swift */; };
 		BC3910D921CA322F0081C454 /* RestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3910D821CA322F0081C454 /* RestaurantTableViewController.swift */; };
+		BC8F726A21CE506400499A5F /* SearchFilterModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F726921CE506400499A5F /* SearchFilterModalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		BC3910D321C9DF500081C454 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		BC3910D621CA0EE10081C454 /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		BC3910D821CA322F0081C454 /* RestaurantTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewController.swift; sourceTree = "<group>"; };
+		BC8F726921CE506400499A5F /* SearchFilterModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterModalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				BC3910AA21C8B8C80081C454 /* SearchViewController.swift */,
 				BC3910CB21C8E96A0081C454 /* RestaurantDetailsViewController.swift */,
 				BC3910D821CA322F0081C454 /* RestaurantTableViewController.swift */,
+				BC8F726921CE506400499A5F /* SearchFilterModalViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC8F726A21CE506400499A5F /* SearchFilterModalViewController.swift in Sources */,
 				BC3910CF21C9343F0081C454 /* Restaurant.swift in Sources */,
 				BC3910AB21C8B8C80081C454 /* SearchViewController.swift in Sources */,
 				BC3910D921CA322F0081C454 /* RestaurantTableViewController.swift in Sources */,

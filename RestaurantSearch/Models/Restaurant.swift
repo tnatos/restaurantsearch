@@ -12,6 +12,7 @@ struct Restaurants: Decodable {
     let total_hit_count: Int?
     let hit_per_page: Int?
     let rest: [Restaurant]?
+    let error: [Error]?
 }
 
 struct Restaurant: Decodable {
@@ -37,4 +38,9 @@ struct Access: Decodable {
 struct ImageUrls: Decodable {
     let shop_image1: String?
     let shop_image2: String?
+}
+
+struct Error: Decodable {
+    let code: Int?
+    let message: String?
 }

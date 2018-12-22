@@ -9,13 +9,16 @@
 import UIKit
 import CoreLocation
 
-class SearchViewController: UIViewController, CLLocationManagerDelegate {
+class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, SearchFilterModalViewControllerDelegate {
 
     //MARK: Properties
     let locationManager = CLLocationManager()
     var latitude: Double = 0
     var longitude: Double = 0
-    @IBOutlet weak var label: UILabel!
+    var filterCreditCard: Bool = false
+    var searchRadius: Int = 2
+    
+    @IBOutlet weak var searchTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +35,6 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    func setLabel(text: String) {
-        DispatchQueue.main.async { // Make sure you're on the main thread here
-            self.label.text = text
-        }
-    }
-    
     //MARK: LocationManager Delegate Functions
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
@@ -48,18 +45,32 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    private func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error);
     }
     
+    //MARK: Search Filter Modal Delegate Functions
+    
+    // receive filter settings from modal
+    func receiveSettings(searchRadius: Int, creditCard: Bool) {
+        self.searchRadius = searchRadius
+        self.filterCreditCard = creditCard
+    }
+    
+    //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if segue.destination is RestaurantTableViewController
-        {
+        
+        if segue.destination is RestaurantTableViewController {
             let vc = segue.destination as? RestaurantTableViewController
-            vc?.latitude = 34.69374 //self.latitude
-            vc?.longitude = 135.50218 //self.longitude
-            //self.present(vc!, animated: true, completion: nil)
+            vc?.latitude = self.latitude
+            vc?.longitude = self.longitude
+        }
+        else if segue.destination is SearchFilterModalViewController {
+            let vc = segue.destination as? SearchFilterModalViewController
+            vc?.creditCardToggle = self.filterCreditCard
+            vc?.searchRadius = self.searchRadius
+            vc?.delegate = self
         }
     }
 }
