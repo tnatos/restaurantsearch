@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class RestaurantDetailsViewController: UIViewController {
+class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: Properties
     var restaurantImageUrl: ImageUrls!
     var restaurantName: String!
@@ -44,9 +44,14 @@ class RestaurantDetailsViewController: UIViewController {
                     region.span.latitudeDelta /= 5000.0
                     self?.restaurantMapView.setRegion(region, animated: true)
                     self?.restaurantMapView.addAnnotation(mark)
+                    self?.restaurantMapView.showsUserLocation = true
                 }
             }
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
     }
     
     func loadImage() {
