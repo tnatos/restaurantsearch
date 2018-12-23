@@ -16,21 +16,30 @@ class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelega
     var restaurantAddress: String!
     var telephone: String!
     var businessHours: String!
+    var holiday: String!
     
     @IBOutlet weak var restaurantImage: UIImageView!
     @IBOutlet weak var restaurantNameLabel: UILabel!
-    @IBOutlet weak var restaurantAddressLabel: UILabel!
+    @IBOutlet weak var restaurantAddressMapLabel: UILabel!
     @IBOutlet weak var telephoneLabel: UILabel!
     @IBOutlet weak var businessHoursLabel: UILabel!
     @IBOutlet weak var restaurantMapView: MKMapView!
+    @IBOutlet weak var restaurantHolidaysLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         restaurantNameLabel.text = self.restaurantName
-        restaurantAddressLabel.text = self.restaurantAddress
         telephoneLabel.text = self.telephone
-        businessHoursLabel.text = self.businessHours
+        if (self.businessHours != "") {
+            businessHoursLabel.text = self.businessHours
+        }
+        if (self.holiday != "") {
+            restaurantHolidaysLabel.text = self.holiday
+        }
+        restaurantAddressMapLabel.text = self.restaurantAddress
+        
+        
         loadImage()
         let location = restaurantAddress
         let geocoder = CLGeocoder()
@@ -40,8 +49,8 @@ class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelega
                 
                 if var region = self?.restaurantMapView.region {
                     region.center = location.coordinate
-                    region.span.longitudeDelta /= 5000.0
-                    region.span.latitudeDelta /= 5000.0
+                    region.span.longitudeDelta /= 1000.0
+                    region.span.latitudeDelta /= 1000.0
                     self?.restaurantMapView.setRegion(region, animated: true)
                     self?.restaurantMapView.addAnnotation(mark)
                     self?.restaurantMapView.showsUserLocation = true

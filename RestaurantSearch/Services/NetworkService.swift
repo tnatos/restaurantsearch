@@ -20,8 +20,7 @@ class GuruNavi {
         let offsetPage = "&offset_page=\(page)"
         
         let jsonUrlString = "\(urlString)\(key)&\(range)&latitude=\(latitude)&longitude=\(longitude)\(card)\(freeword)\(offsetPage)"
-        
-        print(jsonUrlString)
+
         
         guard let url = URL(string: jsonUrlString) else { return }
         

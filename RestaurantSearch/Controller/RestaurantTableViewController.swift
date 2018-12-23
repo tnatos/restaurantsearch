@@ -83,7 +83,12 @@ class RestaurantTableViewController: UITableViewController {
         // Configure the cell...
         let restaurant = restaurants[indexPath.row]
         cell.restaurantNameLabel?.text = restaurant.name!
-        cell.restaurantAccessLabel?.text = "\(restaurant.access?.line ?? "")\(restaurant.access?.station ?? "")から\(restaurant.access?.walk ?? "")分"
+        var restaurantAccessWalk: String = ""
+        if (restaurant.access?.walk != "") {
+            restaurantAccessWalk = "から\(restaurant.access?.walk ?? "")分"
+        }
+        let restaurantAccess = "\(restaurant.access?.line ?? "")\(restaurant.access?.station ?? "")\(restaurantAccessWalk)"
+        cell.restaurantAccessLabel?.text = restaurantAccess
         // Loading cell image thumbnail
         let urlString = restaurant.image_url?.shop_image1
         
@@ -120,6 +125,7 @@ class RestaurantTableViewController: UITableViewController {
             vc?.restaurantName = restaurants[indexPath.row].name
             vc?.restaurantAddress = restaurants[indexPath.row].address
             vc?.businessHours = restaurants[indexPath.row].opentime
+            vc?.holiday = restaurants[indexPath.row].holiday
             vc?.telephone = restaurants[indexPath.row].tel
         }
     }

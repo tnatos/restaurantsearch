@@ -86,7 +86,6 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
             vc?.searchRadius = self.searchRadius + 1
             vc?.creditCard = self.filterCreditCard
             vc?.searchTerms = self.searchTerms
-            print(searchTerms)
         }
         else if segue.destination is SearchFilterModalViewController {
             let vc = segue.destination as? SearchFilterModalViewController

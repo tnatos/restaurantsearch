@@ -32,7 +32,6 @@ class SearchFilterModalViewController: UIViewController {
     
     @IBAction func applyFilterSettings(_ sender: UIButton) {
         let searchRadiusOption = searchRadiusSegmentedControl.selectedSegmentIndex
-        print(searchRadiusOption)
         let creditCardOption = creditCardSwitch.isOn
         delegate?.receiveSettings(searchRadius: searchRadiusOption, creditCard: creditCardOption)
         self.dismiss(animated: true, completion: nil)
