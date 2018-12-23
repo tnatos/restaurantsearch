@@ -32,7 +32,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
         self.searchTerms = ""
     }
 
-    //MARK: Actions
+    // MARK: Actions
     @IBAction func searchRestaurants(_ sender: Any) {
         locationManager.startUpdatingLocation()
     }
@@ -41,11 +41,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
         self.searchTerms = sender.text
     }
     
-    @IBAction func resignTextFieldInput(_ sender: UITapGestureRecognizer) {
-        searchTextField.resignFirstResponder()
-    }
-    
-    //MARK: LocationManager Delegate Functions
+    // MARK: LocationManager Delegate Functions
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
@@ -59,7 +55,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
         print(error);
     }
     
-    //MARK: Search Filter Modal Delegate Functions
+    // MARK: Search Filter Modal Delegate Functions
     
     // receive filter settings from modal
     func receiveSettings(searchRadius: Int, creditCard: Bool) {
@@ -67,15 +63,52 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, UITextF
         self.filterCreditCard = creditCard
     }
     
-    //MARK: Search Textfield Delegate Functions
+    // MARK: Search Textfield Delegate Functions
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        if checkLocationServicesEnabled() {
         self.performSegue(withIdentifier: "searchRestaurantSegue", sender: self)
+        }
+        else {
+            showLocationServicesDisabledAlert()
+        }
         return true
     }
     
-    //MARK: Navigation
+    // MARK: Alerts
+    func showLocationServicesDisabledAlert() {
+        let alert = UIAlertController(title: "位置情報", message: "位置情報サービスはアプリ許可されていない場合検索できません。位置情報サービスをオンにしてください。", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "閉じる", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func checkLocationServicesEnabled() -> Bool {
+
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .notDetermined, .restricted, .denied:
+                showLocationServicesDisabledAlert()
+                return false
+            case .authorizedAlways, .authorizedWhenInUse:
+                return true
+            }
+        } else {
+            showLocationServicesDisabledAlert()
+            return false
+        }
+    }
+    
+    
+    
+    // MARK: Navigation
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if (identifier == "searchRestaurantSegue") {
+            return checkLocationServicesEnabled()
+        }
+        return true
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         searchTextField.resignFirstResponder()
