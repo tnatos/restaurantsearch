@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class RestaurantDetailsViewController: UIViewController {
+class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: Properties
     var restaurantImageUrl: ImageUrls!
     var restaurantName: String!
