@@ -234,11 +234,18 @@
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="住所" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJZ-kH-x57">
                                                                         <rect key="frame" x="21" y="2.0000000000000009" width="274" height="14.333333333333336"/>
+                                                                        <accessibility key="accessibilityConfiguration">
+                                                                            <accessibilityTraits key="traits" button="YES" staticText="YES"/>
+                                                                        </accessibility>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <nil key="textColor"/>
+                                                                        <color key="textColor" red="0.2060527503490448" green="0.4713212251663208" blue="0.96475929021835327" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
+                                                                <gestureRecognizers/>
+                                                                <connections>
+                                                                    <outletCollection property="gestureRecognizers" destination="8aq-Du-WH5" appends="YES" id="LjC-rb-IGq"/>
+                                                                </connections>
                                                             </stackView>
                                                         </subviews>
                                                         <constraints>
@@ -311,6 +318,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="brY-K7-4On" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="8aq-Du-WH5">
+                    <connections>
+                        <action selector="centerOnLocation:" destination="LDB-BF-RuH" id="dzm-pc-e0c"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3261.5999999999999" y="133.74384236453201"/>
         </scene>

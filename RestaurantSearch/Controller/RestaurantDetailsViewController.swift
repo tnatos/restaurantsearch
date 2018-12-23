@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelegate {
+class RestaurantDetailsViewController: UIViewController {
     //MARK: Properties
     var restaurantImageUrl: ImageUrls!
     var restaurantName: String!
@@ -41,6 +41,15 @@ class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelega
         
         
         loadImage()
+        locateRestaurant()
+    }
+    
+    // MARK: Actions
+    @IBAction func centerOnLocation(_ sender: UITapGestureRecognizer) {
+        locateRestaurant()
+    }
+    
+    func locateRestaurant() {
         let location = restaurantAddress
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location!) { [weak self] placemarks, error in
@@ -49,18 +58,14 @@ class RestaurantDetailsViewController: UIViewController, CLLocationManagerDelega
                 
                 if var region = self?.restaurantMapView.region {
                     region.center = location.coordinate
-                    region.span.longitudeDelta /= 1000.0
-                    region.span.latitudeDelta /= 1000.0
+                    region.span.longitudeDelta = 0.01
+                    region.span.latitudeDelta = 0.01
                     self?.restaurantMapView.setRegion(region, animated: true)
                     self?.restaurantMapView.addAnnotation(mark)
                     self?.restaurantMapView.showsUserLocation = true
                 }
             }
         }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
     }
     
     func loadImage() {
